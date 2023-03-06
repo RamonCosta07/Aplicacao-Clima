@@ -1,3 +1,5 @@
+// CSS
+import './WeatherData.css';
 // Icons
 import { CiLocationOn, CiDroplet } from "react-icons/ci";
 import { RiWindyFill } from "react-icons/ri";
@@ -6,9 +8,14 @@ import { IWeather } from "../Interfaces/weather";
 type props = {
   loading: boolean;
   weatherData: IWeather;
+  error: string;
 };
 
-const WeatherData = ({ loading, weatherData }: props) => {
+const WeatherData = ({ loading, weatherData, error }: props) => {
+  if (error) {
+    return <p className="error">{error}</p>;
+  }
+
   return (
     <div className={!loading ? `weather-data` : "weather-data hide"}>
       <h2>
