@@ -1,8 +1,10 @@
 // CSS
-import './WeatherData.css';
+import "./WeatherData.css";
 // Icons
 import { CiLocationOn, CiDroplet } from "react-icons/ci";
 import { RiWindyFill } from "react-icons/ri";
+// API
+const apiUnsplash = "https://source.unsplash.com/800x600/?";
 // Interfaces
 import { IWeather } from "../Interfaces/weather";
 type props = {
@@ -17,7 +19,9 @@ const WeatherData = ({ loading, weatherData, error }: props) => {
   }
 
   return (
-    <div className={!loading ? `weather-data` : "weather-data hide"}>
+    <div
+      className={!loading ? `weather-data` : "weather-data hide"}
+    >
       <h2>
         <CiLocationOn />
         <span id="city">{weatherData.city}</span>
