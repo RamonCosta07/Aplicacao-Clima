@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
+// React
+import { useState } from "react";
+// CSS
 import "./App.css";
-import { SlMagnifier } from "react-icons/sl";
-import { CiLocationOn, CiDroplet } from "react-icons/ci";
-import { RiWindyFill } from "react-icons/ri";
-
+// Components
+import Form from "./components/Form";
+import WeatherData from "./components/WeatherData";
+// API
 const apiKey: string = "1dca3565eb8be9b2cce4d6c0bc068b18";
 const apiCountry: string = "https://countryflagsapi.com/png/";
-
 // Interface
-interface IWeather {
-  city: string;
-  temperature: number | null;
-  description: string;
-  weatherIcon: string;
-  country: string;
-  umidity: number | null;
-  wind: number | null;
-}
+import {IWeather} from './Interfaces/weather';
 
 function App() {
   const [search, setSearch] = useState<string>("");
@@ -50,7 +43,7 @@ function App() {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       showWeatherData(search);
     }
   };
@@ -74,62 +67,13 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <form onSubmit={handleSubmit}>
-          <h3>Pesquisar o clima de uma cidade</h3>
-          <div className="form-input-container">
-            <input
-              type="text"
-              value={search}
-              onChange={handleSearch}
-              onKeyDown={handleKeyDown}
-              placeholder="Digite a cidade"
-            />
-            <div className="btnInput">
-              <button type="submit" className="btn">
-                <SlMagnifier />
-              </button>
-            </div>
-          </div>
-        </form>
-
-        <div
-          className={!loading ? `weather-data` : "weather-data hide"}
-        >
-          <h2>
-            <CiLocationOn />
-            <span id="city">{weatherData.city}</span>
-            <img
-              src={weatherData.country}
-              alt="Bandeira do País"
-              crossOrigin="anonymous"
-              id="country"
-            />
-          </h2>
-          <p id="temperature">
-            <span>{weatherData.temperature}</span>&deg;C
-          </p>
-          <div id="description-container">
-            <p id="description">{weatherData.description}</p>
-            <img
-              src={weatherData.weatherIcon}
-              width="50px"
-              height="50px"
-              alt="Condições do tempo"
-              id="weather-icon"
-            ></img>
-          </div>
-
-          <div id="details-container">
-            <p id="umidity">
-              <CiDroplet />
-              <span>{weatherData.umidity}%</span>
-            </p>
-            <p id="windy">
-              <RiWindyFill />
-              <span>{weatherData.wind} km/h</span>
-            </p>
-          </div>
-        </div>
+        <Form
+          handleSubmit={handleSubmit}
+          search={search}
+          handleSearch={handleSearch}
+          handleKeyDown={handleKeyDown}
+        />
+        <WeatherData loading={loading} weatherData={weatherData} />
       </div>
     </div>
   );
